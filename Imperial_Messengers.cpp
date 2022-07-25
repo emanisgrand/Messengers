@@ -6,30 +6,29 @@
 
 #define V 5
 
-using std::vector;
 using std::string;
 using std::ifstream;
 using std::stringstream;
 using std::getline;
 using std::stoi;
 
-class matrix {
+class Kingdom {
 private:
     int n;
     int* Arr;
 public:
-    matrix() // default constructor
+    Kingdom() // default constructor
     {
         n = 2;
         Arr = new int[2 * (2 + 1) / 2]{ 0 };
     }
 
-    matrix(int n)
+    Kingdom(int n)
     {
         this->n = n;
         Arr = new int[n * (n + 1) / 2];
     }
-    ~matrix() // destructor
+    ~Kingdom() // destructor
     {
         delete[]Arr;
     }
@@ -57,25 +56,32 @@ int minDistance(int dist[], bool sptSet[])
     // Initialize min value
     int min = INT_MAX, min_index;
 
-    for (int v = 0; v < V; v++)
+    for (int v = 0; v < V; v++) 
         if (sptSet[v] == false && dist[v] <= min)
             min = dist[v], min_index = v;
 
     return min_index;
 }
 
-void newDijkstra(int n, int src)
+void send_decree(int nums[], int src)
 {
-    matrix M(n);
-    // initialize the array.
-    int val = 0;
-    for (int i = 1; i <= n; i++)
+    Kingdom M(nums[0]);
+    
+    int ptr = 0;
+    for (int i = 1; i <= nums[0]; i++)
     {
-        for (int j = 1; j <= n; j++)
+        for (int j = 1; j <= nums[0]; j++)
         {
+            if (i > j)
+            {
+                ptr++;
+            }
+            int val = nums[ptr];
             M.Set(i, j, val);
         }
     }
+
+    M.Display();
 
     int dist[V]; 
 
@@ -94,73 +100,34 @@ void newDijkstra(int n, int src)
 
         for (int v = 0; v < V; v++)
         {
-            if (!sptSet[v] && M.Get(u, v) && dist[u] != INT_MAX
-                && dist[u] + M.Get(u, v) < dist[v])
-                dist[v] = dist[u] + M.Get(u, v);
+            int index = u < v ? u * (u - 1) / 2 + v - 1 : v * (v - 1) / 2 + u - 1;
+
+            if (!sptSet[v] && nums[index] && dist[u] != INT_MAX
+                && dist[u] + nums[index] < dist[v])
+                dist[v] = dist[u] + nums[index];
+
         }
     }
 
     printSolution(dist, V);
 }
 
-// Function that implements Dijkstra's single source shortest path algorithm
-// for a graph represented using adjacency matrix representation
-void dijkstra(int graph[V][V], int src)
+void Kingdom::Set(int i, int j, int val)
 {
-    int dist[V]; // The output array.  dist[i] will hold the shortest
-    // distance from src to i
-
-    bool sptSet[V]; // sptSet[i] will be true if vertex i is included in shortest
-    // path tree or shortest distance from src to i is finalized
-
-    // Initialize all distances as INFINITE and stpSet[] as false
-    for (int i = 0; i < V; i++)
-        dist[i] = INT_MAX, sptSet[i] = false;
-
-    // Distance of source vertex from itself is always 0
-    dist[src] = 0;
-
-    // Find shortest path for all vertices
-    for (int count = 0; count < V - 1; count++) {
-        // Pick the minimum distance vertex from the set of vertices not
-        // yet processed. u is always equal to src in the first iteration.
-        int u = minDistance(dist, sptSet);
-
-        // Mark the picked vertex as processed
-        sptSet[u] = true;
-
-        // Update dist value of the adjacent vertices of the picked vertex.
-        for (int v = 0; v < V; v++)
-
-            // Update dist[v] only if is not in sptSet, there is an edge from
-            // u to v, and total weight of path from src to  v through u is
-            // smaller than current value of dist[v]
-            if (!sptSet[v] && graph[u][v] && dist[u] != INT_MAX
-                && dist[u] + graph[u][v] < dist[v])
-                dist[v] = dist[u] + graph[u][v];
-    }
-
-    // print the constructed distance array
-    // the maximum is the answer.
-    printSolution(dist, V);
-}
-
-
-void matrix::Set(int i, int j, int val)
-{
+    int index = i * (i - 1) / 2 + j - 1;
     if (i == j)
     {
-        Arr[i * (i - 1) / 2 + j - 1] = 0;
+        Arr[index] = 0;
     }
     else if (i > j)
     {
-        Arr[i * (i - 1) / 2 + j - 1] = val;
+        Arr[index] = val;
     }
     else {
         Set(j, i, val);
     }
 }
-int matrix::Get(int i, int j)
+int Kingdom::Get(int i, int j)
 {
     if (i == j)
     {
@@ -170,20 +137,17 @@ int matrix::Get(int i, int j)
         return Arr[i * (i - 1) / 2 + j - 1];
     }
     else if (i < j) {
-        return Get(j, i);
+        return Arr[j * (j - 1) /2 + i - 1];
     } else 
     return 0;
 }
 
-void matrix::Display() {
-    for (int i = 1; i <= n; i++)
+void Kingdom::Display() {
+    for (int i = 1; i <= V; i++)
     {
-        for (int j = 1; j <= n; j++)
-        {            
-           /* if (i >= j)
-                cout << Arr[i * (i - 1) / 2 + j - 1] << " ";
-            else*/
-                cout << Get(i, j) << " ";
+        for (int j = 1; j <= V; j++)
+        {
+            cout<< Kingdom::Get(i, j) << " ";
         }
         cout << endl;
     }
@@ -211,7 +175,9 @@ int main(int argc, char* argv[])
         string line;
 
         int nums[12];
+
         int n = 0;
+
         while (getline(infile, line))
         {
             stringstream linestream(line);
@@ -220,66 +186,12 @@ int main(int argc, char* argv[])
                 nums[n] = stoi(line);
                 n++;
             }
-        }        
-
-        matrix M(nums[0]);
-        
-        int ptr = 1;
-        for (int i = 1; i <= nums[0]; i++)
-        {
-            for (int j = 1; j <= nums[0]; j++)
-            {
-                while (nums[ptr] >= 0)
-                {
-                    int val = nums[ptr];
-                    
-                    
-                    M.Set(i, j, val);
-                    ptr++;
-                }
-                    
-            }
         }
-        
-
-        
-        
-        M.Display();
-        
-        newDijkstra(n, 0);
-    
-
-        for (int i = 1; i <= n; i++)
-        {
-            for (int j = 1; j <= n; j++)
-            {
-                
-            }
-        }
-        
-
-        
-        /*
-        while (getline(infile, line)) {
-            
-            stringstream linestream(line);  
-
-            string line_values;
-
-            while (linestream >> line_values) {
-
-            }
-        }
-        */
-    }
-    else {
+        send_decree(nums, 0);
+    }else {
         cout << "Failed to open file...";
     }
     
-    
-    //newDijkstra(n, 0);
-    
-
     int empire[V][V] = { {  0,50,30,100,10},
                          { 50, 0, 5, 20, 0}, 
                          { 30, 5, 0, 50, 0}, 
