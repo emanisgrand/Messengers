@@ -49,6 +49,19 @@ void spread_message(int file_v[], int src)
     display_min_time_spread(dist, visited, M.Size());
 }
 
+int minDistance(int dist[], bool visited[])
+{
+    int len = sizeof(dist); 
+    int min = INT_MAX, min_index = 0, v = 0;
+    while (dist[v] >= 0)
+    {
+
+        if (visited[v] == false && dist[v] <= min)
+            min = dist[v], min_index = v;
+        v++;
+    }     
+    return min_index;
+}
 
 void display_min_time_spread(int dist[], bool visited[], int n)
 {
@@ -74,7 +87,7 @@ int* extract_values(char* argVal[])
         getline(infile, line);
         stringstream linestream(line);
         V = stoi(line);
-        file_v = new int[V] {V};
+        file_v = new int[V+1] {V};
         int i = 1;
         while (getline(infile, line))
         {
@@ -109,22 +122,6 @@ bool input_valid(int argCount, char* argVal[])
     else {
         cout << "ERROR: No file name entered.\nhint: try calling by calling the executable followed by the filename + extension.\n ex:\n\t $> EMartinezIM.exe test.txt" << endl;
     }
-}
-
-
-
-int minDistance(int dist[], bool visited[])
-{
-    int len = sizeof(dist); // needs to be 5.?
-    int min = INT_MAX, min_index = 0, v = 0;
-    while (dist[v] >= 0)
-    {
-
-        if (visited[v] == false && dist[v] <= min)
-            min = dist[v], min_index = v;
-        v++;
-    }     
-    return min_index;
 }
 
 int printSolution(int time_distance[], int n)

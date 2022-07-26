@@ -32,8 +32,7 @@ public:
     /// <summary>
     /// Initializes the Empire map as an int array that represents a symmetrical matrix
     /// </summary>
-    /// <param name="n">The dimensions of the map are nxn</param>
- 
+    /// <param name="n">The dimensions of the map are n-by-n </param>
     Empire(int n) 
     {
         this->size = n;
@@ -57,21 +56,21 @@ public:
     /// <summary>
     /// Used to set the distance-by-time between two city nodes
     /// </summary>
-    /// <param name="i">Iterator for the rows in the array</param>
-    /// <param name="j">Iterator for the columns in the array</param>
-    /// <param name="val">The value of the edge to be stored</param>
+    /// <param name="i"> Iterator for the rows in the array</param>
+    /// <param name="j"> Iterator for the columns in the array</param>
+    /// <param name="val"> The value of the edge to be stored</param>
     void Set(int i, int j, int val); 
 
     /// <summary>
     /// Retrieve the number stored inside of the node_array at the given index 
     /// </summary>
-    /// <param name="i">Iterator for the rows in the array</param>
-    /// <param name="j">Iterator for the columns in the array</param>
-    /// <returns>int that represents the distance-in-time between nodes i and j </returns>
+    /// <param name="i"> Iterator for the rows in the array</param>
+    /// <param name="j"> Iterator for the columns in the array</param>
+    /// <returns> int that represents the distance-in-time between nodes i and j </returns>
     int Get(int i, int j); 
 
     /// <summary>
-    /// Use to display the table as an nxn symmetrical node_array.
+    /// Use to display the table as an n-by-n symmetrical matrix.
     /// </summary>
     /// <example> empire[5][5] = { 
     /// {   0, 50, 30, 100, 10},
