@@ -120,8 +120,8 @@ bool input_valid(int argCount, char* argVal[])
         }
     }
     else {
-        cout << "ERROR: No file name entered.\nhint: try calling by calling the executable followed by the filename + extension.\n ex:\n\t $> EMartinezIM.exe test.txt" << endl;
-    }
+        cout << "ERROR: No file name entered.\nhint: try again by calling the executable followed by the filename.extension.\n eg:\n\t $> EMartinezIM.exe test.txt" << endl;        
+    }  
 }
 
 int printSolution(int time_distance[], int n)
