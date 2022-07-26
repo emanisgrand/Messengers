@@ -15,15 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Imperial_Messengers.cpp">
+    <ClCompile Include="EMartinezIM.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LTMatrix.cpp">
+    <ClCompile Include="ImperialMessengers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="eman.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="LTMatrix.h">
+    <ClInclude Include="ImperialMessengers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="eman.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

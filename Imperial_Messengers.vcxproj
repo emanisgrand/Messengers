@@ -177,11 +177,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Imperial_Messengers.cpp" />
-    <ClCompile Include="LTMatrix.cpp" />
+    <ClCompile Include="eman.cpp" />
+    <ClCompile Include="EMartinezIM.cpp" />
+    <ClCompile Include="ImperialMessengers.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="LTMatrix.h" />
+    <ClInclude Include="eman.h" />
+    <ClInclude Include="ImperialMessengers.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
